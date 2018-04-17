@@ -1,0 +1,7 @@
+for i in `ls original`;do gdal_calc.py --calc='A*100' --outfile=tifx100/$i.100.tif -A original/$i  --A_band=1;done
+for i in `ls tifx100`;do outfilename=`echo $i | awk -F ".tif" '{print $1}'`;gdal_polygonize.py -b 1 tifx100/$i -f "ESRI Shapefile" shp/$outfilename.shp;done
+#+ qgis: 
+# edit table 
+# calculator:
+#	toreal(toreal("DN")/100)
+# save + close
