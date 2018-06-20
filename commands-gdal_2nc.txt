@@ -6,4 +6,8 @@ gdal_calc.py --calc="A+B" -A "africa.tif" -B "africa.nodata.tif" --outfile="afri
 gdal_translate -a_nodata -999 -ot Int16 -of NetCDF africa.2nc.tif africa.nc
 
 
- for i in `ls`;do filename=`echo $i | awk -F "." '{print $1}'`;echo $filename; gdal_calc.py --calc="-999*(A==0)" -A "$i" --outfile="$filename.nodata.tif";gdal_calc.py --calc="A+B" -A "$i" -B "$filename.nodata.tif" --outfile="$filename.2nc.tif";gdal_translate -a_nodata -999 -of NetCDF $filename.2nc.tif $filename.nc;done
+ for i in `ls`;do 
+  filename=`echo $i | awk -F "." '{print $1}'`;
+   echo $filename; gdal_calc.py --calc="-999*(A==0)" -A "$i" --outfile="$filename.nodata.tif";
+   gdal_calc.py --calc="A+B" -A "$i" -B "$filename.nodata.tif" --outfile="$filename.2nc.tif";
+   gdal_translate -a_nodata -999 -of NetCDF $filename.2nc.tif $filename.nc;done
